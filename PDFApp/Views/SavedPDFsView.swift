@@ -3,7 +3,7 @@ import RealmSwift
 import PDFKit
 
 struct SavedPDFsView: View {
-    @ObservedResults(PDFDocumentModel.self) var savedPDFs
+    @ObservedResults(RealmPDFModel.self) var savedPDFs
 
     var body: some View {
         NavigationView {
@@ -49,14 +49,14 @@ struct SavedPDFsView: View {
         }
     }
 
-    private func deletePDF(_ pdf: PDFDocumentModel) {
+    private func deletePDF(_ pdf: RealmPDFModel) {
         let realm = try! Realm()
         try! realm.write {
             realm.delete(pdf)
         }
     }
 
-    private func sharePDF(_ pdf: PDFDocumentModel) {
+    private func sharePDF(_ pdf: RealmPDFModel) {
         let data = pdf.pdfData
         let activityController = UIActivityViewController(activityItems: [data], applicationActivities: nil)
 
@@ -65,9 +65,10 @@ struct SavedPDFsView: View {
         }
     }
 
-    private func showPDF(_ pdf: PDFDocumentModel) {
+    private func showPDF(_ pdf: RealmPDFModel) {
         guard let pdfData = pdf.pdfData,
               let pdfDocument = PDFDocument(data: pdfData) else {
+            print("PDF data is invalid or cannot be read.")
             return
         }
 

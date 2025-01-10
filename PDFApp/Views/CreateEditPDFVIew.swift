@@ -129,7 +129,7 @@ struct CreateEditPDFView: View {
 
         let realm = try! Realm()
 
-        let pdfModel = PDFDocumentModel()
+        let pdfModel = RealmPDFModel()
         pdfModel.name = "Document \(Date())"
         pdfModel.dateCreated = Date()
         pdfModel.pdfData = data
