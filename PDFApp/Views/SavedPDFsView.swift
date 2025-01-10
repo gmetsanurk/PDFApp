@@ -10,22 +10,9 @@ struct SavedPDFsView: View {
             List {
                 ForEach(savedPDFs) { pdf in
                     HStack {
-                        if let pdfData = pdf.pdfData,
-                           let image = UIImage(data: pdfData),
-                           let pdfDocument = PDFDocument(data: pdfData) {
-                            Image(uiImage: image)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 50, height: 50)
-                                .clipShape(Circle())
-                            
-                            VStack(alignment: .leading) {
-                                Text(pdf.name)
-                                    .font(.headline)
-                                Text("Дата: \(pdf.dateCreated, formatter: dateFormatter)")
-                                    .font(.subheadline)
-                                    .foregroundColor(.gray)
-                            }
+                        if let pdfData = pdf.pdfData {
+                            addThumbnail(pdfData)
+                            addMetadata(pdf, pdfData)
                         }
                     }
                     .contextMenu {
@@ -49,6 +36,32 @@ struct SavedPDFsView: View {
         }
     }
 
+    // MARK: - Helper Methods
+
+    @ViewBuilder
+    private func addThumbnail(_ pdfData: Data) -> some View {
+        if let image = UIImage(data: pdfData) {
+            Image(uiImage: image)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 50, height: 50)
+                .clipShape(Circle())
+        }
+    }
+
+    @ViewBuilder
+    private func addMetadata(_ pdf: RealmPDFModel, _ pdfData: Data) -> some View {
+        if let _ = PDFDocument(data: pdfData) {
+            VStack(alignment: .leading) {
+                Text(pdf.name)
+                    .font(.headline)
+                Text("Дата: \(pdf.creationDate, formatter: dateFormatter)")
+                    .font(.subheadline)
+                    .foregroundColor(.gray)
+            }
+        }
+    }
+
     private func deletePDF(_ pdf: RealmPDFModel) {
         let realm = try! Realm()
         try! realm.write {
@@ -57,7 +70,7 @@ struct SavedPDFsView: View {
     }
 
     private func sharePDF(_ pdf: RealmPDFModel) {
-        let data = pdf.pdfData
+        guard let data = pdf.pdfData else { return }
         let activityController = UIActivityViewController(activityItems: [data], applicationActivities: nil)
 
         if let controller = UIApplication.shared.windows.first?.rootViewController {
@@ -73,6 +86,9 @@ struct SavedPDFsView: View {
         }
 
         let pdfViewer = PDFViewer(pdfDocument: pdfDocument)
+        if let controller = UIApplication.shared.windows.first?.rootViewController {
+            controller.present(UIHostingController(rootView: pdfViewer), animated: true)
+        }
     }
 
     private var dateFormatter: DateFormatter {

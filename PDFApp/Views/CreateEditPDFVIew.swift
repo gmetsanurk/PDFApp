@@ -59,8 +59,10 @@ struct CreateEditPDFView: View {
                 .disabled(selectedImages.isEmpty)
             }
 
-            if let _ = pdfDocument {
-                Button(action: savePDFToRealm) {
+            if let pdfDocument = pdfDocument {
+                Button(action: {
+                    savePDFToRealm(pdfDocument: pdfDocument, name: "My PDF Document")
+                }) {
                     Text("Save PDF")
                         .font(.headline)
                         .padding()
@@ -119,7 +121,7 @@ struct CreateEditPDFView: View {
         pdfDocument = pdf
     }
 
-    private func savePDFToRealm() {
+    /*private func savePDFToRealm() {
         guard let pdfDocument = pdfDocument else { return }
 
         guard let data = pdfDocument.dataRepresentation() else {
@@ -142,6 +144,34 @@ struct CreateEditPDFView: View {
         } catch {
             saveSuccessMessage = AlertMessage(message: "Error while saving PDF: \(error.localizedDescription)")
         }
+    }*/
+    func savePDFToRealm(pdfDocument: PDFDocument, name: String) {
+        guard let pdfData = pdfDocument.dataRepresentation() else {
+            print("Unable to generate PDF data.")
+            return
+        }
+
+        let thumbnailData: Data?
+        if let firstPage = pdfDocument.page(at: 0) {
+            let thumbnailSize = CGSize(width: 100, height: 100)
+            let thumbnailImage = firstPage.thumbnail(of: thumbnailSize, for: .mediaBox)
+            thumbnailData = thumbnailImage.pngData()
+        } else {
+            thumbnailData = nil
+        }
+
+        let realmPDF = RealmPDFModel()
+        realmPDF.name = name
+        realmPDF.pdfData = pdfData
+        realmPDF.thumbnailData = thumbnailData!
+        realmPDF.creationDate = Date()
+
+        let realm = try! Realm()
+        try! realm.write {
+            realm.add(realmPDF)
+        }
+
+        print("PDF saved to Realm successfully!")
     }
 }
 
