@@ -1,107 +1,34 @@
 import SwiftUI
-import RealmSwift
-import PDFKit
 
 struct SavedPDFsView: View {
-    @ObservedResults(RealmPDFModel.self) var savedPDFs
+    @StateObject private var viewModel = SavedPDFsViewModel()
 
     var body: some View {
         NavigationView {
-            List {
-                ForEach(savedPDFs) { pdf in
-                    HStack {
-                        if let pdfData = pdf.pdfData {
-                            addThumbnail(pdfData)
-                            addMetadata(pdf, pdfData)
-                        }
+            List(viewModel.savedPDFs) { pdf in
+                HStack {
+                    if let pdfData = pdf.pdfData {
+                        viewModel.addThumbnail(pdfData)
+                        viewModel.addMetadata(pdf, pdfData)
                     }
-                    .contextMenu {
-                        Button(action: {
-                            deletePDF(pdf)
-                        }) {
-                            Label("Delete", systemImage: "trash")
-                        }
-                        Button(action: {
-                            sharePDF(pdf)
-                        }) {
-                            Label("Share", systemImage: "square.and.arrow.up")
-                        }
+                }
+                .contextMenu {
+                    Button(action: {
+                        viewModel.deletePDF(pdf)
+                    }) {
+                        Label("Delete", systemImage: "trash")
                     }
-                    .onTapGesture {
-                        showPDF(pdf)
+                    Button(action: {
+                        viewModel.sharePDF(pdf)
+                    }) {
+                        Label("Share", systemImage: "square.and.arrow.up")
                     }
+                }
+                .onTapGesture {
+                    viewModel.showPDF(pdf)
                 }
             }
             .navigationTitle("Saved PDF")
         }
-    }
-
-    // MARK: - Helper Methods
-
-    @ViewBuilder
-    private func addThumbnail(_ pdfData: Data) -> some View {
-        if let image = UIImage(data: pdfData) {
-            Image(uiImage: image)
-                .resizable()
-                .scaledToFit()
-                .frame(width: 50, height: 50)
-                .clipShape(Circle())
-        }
-    }
-
-    @ViewBuilder
-    private func addMetadata(_ pdf: RealmPDFModel, _ pdfData: Data) -> some View {
-        if let _ = PDFDocument(data: pdfData) {
-            VStack(alignment: .leading) {
-                Text(pdf.name)
-                    .font(.headline)
-                Text("Дата: \(pdf.creationDate, formatter: dateFormatter)")
-                    .font(.subheadline)
-                    .foregroundColor(.gray)
-            }
-        }
-    }
-
-    private func deletePDF(_ pdf: RealmPDFModel) {
-        let realm = try! Realm()
-
-        guard let objectToDelete = realm.object(ofType: RealmPDFModel.self, forPrimaryKey: pdf.id) else {
-            print("Cannot find object in current Realm")
-            return
-        }
-
-        try! realm.write {
-            realm.delete(objectToDelete)
-        }
-    }
-
-
-    private func sharePDF(_ pdf: RealmPDFModel) {
-        guard let data = pdf.pdfData else { return }
-        let activityController = UIActivityViewController(activityItems: [data], applicationActivities: nil)
-
-        if let controller = UIApplication.shared.windows.first?.rootViewController {
-            controller.present(activityController, animated: true, completion: nil)
-        }
-    }
-
-    private func showPDF(_ pdf: RealmPDFModel) {
-        guard let pdfData = pdf.pdfData,
-              let pdfDocument = PDFDocument(data: pdfData) else {
-            print("PDF data is invalid or cannot be read.")
-            return
-        }
-
-        let pdfViewer = PDFViewer(pdfDocument: pdfDocument)
-        if let controller = UIApplication.shared.windows.first?.rootViewController {
-            controller.present(UIHostingController(rootView: pdfViewer), animated: true)
-        }
-    }
-
-    private var dateFormatter: DateFormatter {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .short
-        formatter.timeStyle = .short
-        return formatter
     }
 }
