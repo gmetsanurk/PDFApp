@@ -1,6 +1,5 @@
 import SwiftUI
 import PDFKit
-import PhotosUI
 import RealmSwift
 
 struct AlertMessage: Identifiable {
@@ -121,30 +120,6 @@ struct CreateEditPDFView: View {
         pdfDocument = pdf
     }
 
-    /*private func savePDFToRealm() {
-        guard let pdfDocument = pdfDocument else { return }
-
-        guard let data = pdfDocument.dataRepresentation() else {
-            saveSuccessMessage = AlertMessage(message: "Cannot save PDF.")
-            return
-        }
-
-        let realm = try! Realm()
-
-        let pdfModel = RealmPDFModel()
-        pdfModel.name = "Document \(Date())"
-        pdfModel.dateCreated = Date()
-        pdfModel.pdfData = data
-
-        do {
-            try realm.write {
-                realm.add(pdfModel)
-            }
-            saveSuccessMessage = AlertMessage(message: "PDF successfully saved to DB")
-        } catch {
-            saveSuccessMessage = AlertMessage(message: "Error while saving PDF: \(error.localizedDescription)")
-        }
-    }*/
     func savePDFToRealm(pdfDocument: PDFDocument, name: String) {
         guard let pdfData = pdfDocument.dataRepresentation() else {
             print("Unable to generate PDF data.")

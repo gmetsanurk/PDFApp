@@ -64,10 +64,17 @@ struct SavedPDFsView: View {
 
     private func deletePDF(_ pdf: RealmPDFModel) {
         let realm = try! Realm()
+
+        guard let objectToDelete = realm.object(ofType: RealmPDFModel.self, forPrimaryKey: pdf.id) else {
+            print("Cannot find object in current Realm")
+            return
+        }
+
         try! realm.write {
-            realm.delete(pdf)
+            realm.delete(objectToDelete)
         }
     }
+
 
     private func sharePDF(_ pdf: RealmPDFModel) {
         guard let data = pdf.pdfData else { return }
