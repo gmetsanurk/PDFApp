@@ -1,0 +1,43 @@
+import SwiftUI
+import PhotosUI
+
+struct FilePicker: UIViewControllerRepresentable {
+    @Binding var selectedImages: [UIImage]
+
+    func makeUIViewController(context: Context) -> PHPickerViewController {
+        var configuration = PHPickerConfiguration()
+        configuration.filter = .images
+        //configuration.selectionLimit = 0
+        let picker = PHPickerViewController(configuration: configuration)
+        picker.delegate = context.coordinator
+        return picker
+    }
+
+    func updateUIViewController(_ uiViewController: PHPickerViewController, context: Context) {}
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
+    }
+
+    class Coordinator: NSObject, PHPickerViewControllerDelegate {
+        let parent: FilePicker
+
+        init(_ parent: FilePicker) {
+            self.parent = parent
+        }
+
+        func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+            picker.dismiss(animated: true)
+            for result in results {
+                if result.itemProvider.canLoadObject(ofClass: UIImage.self) {
+                    result.itemProvider.loadObject(ofClass: UIImage.self) { [weak self] image, _ in
+                        guard let self = self, let uiImage = image as? UIImage else { return }
+                        DispatchQueue.main.async {
+                            self.parent.selectedImages.append(uiImage)
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
