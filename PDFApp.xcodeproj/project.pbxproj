@@ -91,8 +91,8 @@
 		66D4D5B82D30DD5C00D640AE /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				66D4D5D62D31151F00D640AE /* SavedPDFsView.swift */,
 				66D4D5B22D30DD5C00D640AE /* ContentView.swift */,
+				66D4D5D62D31151F00D640AE /* SavedPDFsView.swift */,
 				66D4D5B32D30DD5C00D640AE /* CreateEditPDFVIew.swift */,
 				66D4D5B52D30DD5C00D640AE /* PDFViewer.swift */,
 				66D4D5B62D30DD5C00D640AE /* SavedDocumentsView.swift */,
