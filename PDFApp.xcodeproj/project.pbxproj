@@ -18,7 +18,8 @@
 		66D4D5C52D30E9F200D640AE /* PDFFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D4D5C42D30E9F000D640AE /* PDFFile.swift */; };
 		66D4D5C72D30EF2200D640AE /* PhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D4D5C62D30EF2000D640AE /* PhotoPicker.swift */; };
 		66D4D5D12D31024300D640AE /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 66D4D5D02D31024300D640AE /* RealmSwift */; };
-		66D4D5D52D3106B100D640AE /* PDFModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D4D5D42D3106AA00D640AE /* PDFModel.swift */; };
+		66D4D5D52D3106B100D640AE /* RealmPDFModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D4D5D42D3106AA00D640AE /* RealmPDFModel.swift */; };
+		66D4D5D72D31152800D640AE /* SavedPDFsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D4D5D62D31151F00D640AE /* SavedPDFsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -46,7 +47,8 @@
 		66D4D5B72D30DD5C00D640AE /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		66D4D5C42D30E9F000D640AE /* PDFFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFFile.swift; sourceTree = "<group>"; };
 		66D4D5C62D30EF2000D640AE /* PhotoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPicker.swift; sourceTree = "<group>"; };
-		66D4D5D42D3106AA00D640AE /* PDFModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFModel.swift; sourceTree = "<group>"; };
+		66D4D5D42D3106AA00D640AE /* RealmPDFModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmPDFModel.swift; sourceTree = "<group>"; };
+		66D4D5D62D31151F00D640AE /* SavedPDFsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedPDFsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +92,7 @@
 			isa = PBXGroup;
 			children = (
 				66D4D5B22D30DD5C00D640AE /* ContentView.swift */,
+				66D4D5D62D31151F00D640AE /* SavedPDFsView.swift */,
 				66D4D5B32D30DD5C00D640AE /* CreateEditPDFVIew.swift */,
 				66D4D5B52D30DD5C00D640AE /* PDFViewer.swift */,
 				66D4D5B62D30DD5C00D640AE /* SavedDocumentsView.swift */,
@@ -103,12 +106,20 @@
 			children = (
 				66D4D5B12D30DD5C00D640AE /* Preview Content */,
 				66D4D5B82D30DD5C00D640AE /* Views */,
+				66D4D5D82D31220A00D640AE /* Models */,
 				66D4D5B42D30DD5C00D640AE /* PDFEditorApp.swift */,
 				66D4D5C42D30E9F000D640AE /* PDFFile.swift */,
 				66D4D5C62D30EF2000D640AE /* PhotoPicker.swift */,
-				66D4D5D42D3106AA00D640AE /* PDFModel.swift */,
 			);
 			path = PDFApp;
+			sourceTree = "<group>";
+		};
+		66D4D5D82D31220A00D640AE /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				66D4D5D42D3106AA00D640AE /* RealmPDFModel.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -189,7 +200,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				66D4D5D52D3106B100D640AE /* PDFModel.swift in Sources */,
+				66D4D5D52D3106B100D640AE /* RealmPDFModel.swift in Sources */,
 				66D4D5BC2D30DD5C00D640AE /* ContentView.swift in Sources */,
 				66D4D5BD2D30DD5C00D640AE /* CreateEditPDFVIew.swift in Sources */,
 				66D4D5C72D30EF2200D640AE /* PhotoPicker.swift in Sources */,
@@ -198,6 +209,7 @@
 				66D4D5BF2D30DD5C00D640AE /* PDFViewer.swift in Sources */,
 				66D4D5C02D30DD5C00D640AE /* SavedDocumentsView.swift in Sources */,
 				66D4D5C12D30DD5C00D640AE /* WelcomeView.swift in Sources */,
+				66D4D5D72D31152800D640AE /* SavedPDFsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
