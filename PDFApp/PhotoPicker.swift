@@ -1,13 +1,13 @@
 import SwiftUI
 import PhotosUI
 
-struct FilePicker: UIViewControllerRepresentable {
+struct PhotoPicker: UIViewControllerRepresentable {
     @Binding var selectedImages: [UIImage]
 
     func makeUIViewController(context: Context) -> PHPickerViewController {
         var configuration = PHPickerConfiguration()
         configuration.filter = .images
-        //configuration.selectionLimit = 0
+        configuration.selectionLimit = 0 // Нет ограничения на выбор
         let picker = PHPickerViewController(configuration: configuration)
         picker.delegate = context.coordinator
         return picker
@@ -20,9 +20,9 @@ struct FilePicker: UIViewControllerRepresentable {
     }
 
     class Coordinator: NSObject, PHPickerViewControllerDelegate {
-        let parent: FilePicker
+        let parent: PhotoPicker
 
-        init(_ parent: FilePicker) {
+        init(_ parent: PhotoPicker) {
             self.parent = parent
         }
 
