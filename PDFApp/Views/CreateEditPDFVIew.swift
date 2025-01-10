@@ -81,6 +81,17 @@ struct CreateEditPDFView: View {
                 .padding()
             }
         }
+        
+        NavigationLink(destination: SavedPDFsView()) {
+            Text("Show saved PDFs")
+                .font(.headline)
+                .padding()
+                .background(Color.purple)
+                .foregroundColor(.white)
+                .cornerRadius(10)
+        }
+        .padding()
+        
         .sheet(isPresented: $showingPhotoPicker) {
             PhotoPicker(selectedImages: $selectedImages)
         }
