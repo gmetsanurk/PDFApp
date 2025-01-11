@@ -63,11 +63,7 @@ class SavedPDFsViewModel: ObservableObject {
             return
         }
 
-        // Show it with coordinator
-        let pdfViewer = PDFViewer(pdfDocument: pdfDocument)
-        if let controller = UIApplication.shared.windows.first?.rootViewController {
-            controller.present(UIHostingController(rootView: pdfViewer), animated: true)
-        }
+        coordinator.showPdf(pdfDocument: pdfDocument)
     }
     
     func createMetadata(_ pdf: RealmPDFModel, _ pdfData: Data) -> MetadataRowData? {
