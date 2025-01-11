@@ -1,30 +1,26 @@
 import SwiftUI
 import PDFKit
-import RealmSwift
 
 struct AlertMessage: Identifiable {
     let id = UUID()
     let message: String
 }
 
-
 struct CreateEditPDFView: View {
-    @State private var selectedImages: [UIImage] = []
-    @State private var pdfDocument: PDFDocument?
-    @State private var showingPDFViewer = false
+    @StateObject private var viewModel = CreateEditPDFViewModel()
     @State private var showingPhotoPicker = false
-    @State private var saveSuccessMessage: AlertMessage?
-
+    @State private var showingPDFViewer = false
+    
     var body: some View {
         VStack {
-            if selectedImages.isEmpty {
+            if viewModel.selectedImages.isEmpty {
                 Text("Choose pic for editing PDF")
                     .foregroundColor(.gray)
                     .padding()
             } else {
                 ScrollView {
                     VStack {
-                        ForEach(selectedImages, id: \.self) { image in
+                        ForEach(viewModel.selectedImages, id: \.self) { image in
                             Image(uiImage: image)
                                 .resizable()
                                 .scaledToFit()
@@ -34,7 +30,7 @@ struct CreateEditPDFView: View {
                     }
                 }
             }
-
+            
             HStack {
                 Button(action: { showingPhotoPicker = true }) {
                     Text("Add pic")
@@ -45,8 +41,8 @@ struct CreateEditPDFView: View {
                         .cornerRadius(10)
                 }
                 .padding()
-
-                Button(action: generatePDF) {
+                
+                Button(action: { viewModel.generatePDF() }) {
                     Text("Create PDF")
                         .font(.headline)
                         .padding()
@@ -55,12 +51,12 @@ struct CreateEditPDFView: View {
                         .cornerRadius(10)
                 }
                 .padding()
-                .disabled(selectedImages.isEmpty)
+                .disabled(viewModel.selectedImages.isEmpty)
             }
-
-            if let pdfDocument = pdfDocument {
+            
+            if let pdfDocument = viewModel.pdfDocument {
                 Button(action: {
-                    savePDFToRealm(pdfDocument: pdfDocument, name: "My PDF Document")
+                    viewModel.savePDFToRealm(pdfDocument: pdfDocument, name: "My PDF Document")
                 }) {
                     Text("Save PDF")
                         .font(.headline)
@@ -70,7 +66,7 @@ struct CreateEditPDFView: View {
                         .cornerRadius(10)
                 }
                 .padding()
-
+                
                 Button(action: { showingPDFViewer = true }) {
                     Text("Show PDF")
                         .font(.headline)
@@ -94,59 +90,20 @@ struct CreateEditPDFView: View {
         .padding()
         
         .sheet(isPresented: $showingPhotoPicker) {
-            PhotoPicker(selectedImages: $selectedImages)
+            PhotoPicker(selectedImages: $viewModel.selectedImages)
         }
         .sheet(isPresented: $showingPDFViewer) {
-            if let pdfDocument = pdfDocument {
+            if let pdfDocument = viewModel.pdfDocument {
                 PDFViewer(pdfDocument: pdfDocument)
             }
         }
-        .alert(item: $saveSuccessMessage) { alertMessage in
+        .alert(item: $viewModel.saveSuccessMessage) { alertMessage in
             Alert(
                 title: Text("Success"),
                 message: Text(alertMessage.message),
-                dismissButton: .default(Text("Ok")))
+                dismissButton: .default(Text("Ok"))
+            )
         }
         .navigationTitle("Create PDF")
     }
-
-    private func generatePDF() {
-        let pdf = PDFDocument()
-        for (index, image) in selectedImages.enumerated() {
-            if let page = PDFPage(image: image) {
-                pdf.insert(page, at: index)
-            }
-        }
-        pdfDocument = pdf
-    }
-
-    func savePDFToRealm(pdfDocument: PDFDocument, name: String) {
-        guard let pdfData = pdfDocument.dataRepresentation() else {
-            print("Unable to generate PDF data.")
-            return
-        }
-
-        let thumbnailData: Data?
-        if let firstPage = pdfDocument.page(at: 0) {
-            let thumbnailSize = CGSize(width: 100, height: 100)
-            let thumbnailImage = firstPage.thumbnail(of: thumbnailSize, for: .mediaBox)
-            thumbnailData = thumbnailImage.pngData()
-        } else {
-            thumbnailData = nil
-        }
-
-        let realmPDF = RealmPDFModel()
-        realmPDF.name = name
-        realmPDF.pdfData = pdfData
-        realmPDF.thumbnailData = thumbnailData!
-        realmPDF.creationDate = Date()
-
-        let realm = try! Realm()
-        try! realm.write {
-            realm.add(realmPDF)
-        }
-
-        print("PDF saved to Realm successfully!")
-    }
 }
-
