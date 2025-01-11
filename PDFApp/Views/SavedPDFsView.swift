@@ -2,19 +2,19 @@ import SwiftUI
 
 struct SavedPDFsView: View {
     @ObservedObject private var viewModel: SavedPDFsViewModel
-
+    
     init(coordinator: any AppCoordinator) {
         self.viewModel = SavedPDFsViewModel(coordinator: coordinator)
     }
-
+    
     var body: some View {
         NavigationView {
             List(viewModel.savedPDFs) { pdf in
                 HStack {
-                    if let pdfData = pdf.pdfData {
-                        ThumbnailView(pdfData: pdfData)
+                    if let thumbnailData = pdf.thumbnailData {
+                        ThumbnailView(pdfData: thumbnailData)
                         
-                        if let metadata = viewModel.createMetadata(pdf, pdfData) {
+                        if let metadata = viewModel.createMetadata(pdf, pdf.pdfData ?? Data()) {
                             MetadataRow(data: metadata)
                         }
                     }
@@ -43,7 +43,8 @@ struct SavedPDFsView: View {
             .navigationTitle("Saved PDFs")
             .sheet(isPresented: $viewModel.showMergePicker) {
                 MergePicker(
-                    savedPDFs: viewModel.savedPDFs,
+                    availablePDFs: viewModel.savedPDFs,
+                    selectedFirstPDF: viewModel.selectedFirstPDF,
                     onDocumentSelected: { secondPDF in
                         viewModel.mergePDFs(with: secondPDF)
                     }
@@ -52,5 +53,4 @@ struct SavedPDFsView: View {
         }
     }
 }
-
 

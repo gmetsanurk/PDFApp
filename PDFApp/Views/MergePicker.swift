@@ -1,16 +1,21 @@
 import SwiftUI
 
 struct MergePicker: View {
-    let savedPDFs: [RealmPDFModel]
-    let onDocumentSelected: (RealmPDFModel) -> Void
+    var availablePDFs: [SavedPDF]
+    var selectedFirstPDF: RealmPDFModel?
+    var onDocumentSelected: (SavedPDF) -> Void
 
     var body: some View {
         NavigationView {
-            List(savedPDFs) { pdf in
-                Button(action: {
-                    onDocumentSelected(pdf)
-                }) {
+            List(availablePDFs.filter { $0.id != selectedFirstPDF?.id }) { pdf in
+                HStack {
+                    if let thumbnailData = pdf.thumbnailData {
+                        ThumbnailView(pdfData: thumbnailData)
+                    }
                     Text(pdf.name)
+                }
+                .onTapGesture {
+                    onDocumentSelected(pdf)
                 }
             }
             .navigationTitle("Select PDF to Merge")

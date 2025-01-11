@@ -3,11 +3,11 @@ import RealmSwift
 import PDFKit
 
 class SavedPDFsViewModel: ObservableObject {
-    @Published var savedPDFs: [RealmPDFModel] = []
+    @Published var savedPDFs: [SavedPDF] = []
     @Published var errorMessage: String?
     @Published var showMergePicker = false
     
-    private var selectedFirstPDF: RealmPDFModel?
+    var selectedFirstPDF: RealmPDFModel?
     private var realm: Realm?
     let coordinator: any AppCoordinator
     
@@ -28,9 +28,22 @@ class SavedPDFsViewModel: ObservableObject {
         }
         
         let savedPDFsResults = realm.objects(RealmPDFModel.self)
-        self.savedPDFs = Array(savedPDFsResults)
+        self.savedPDFs = convertToSavedPDFs(Array(savedPDFsResults))
     }
-    
+
+    func convertToSavedPDFs(_ realmPDFs: [RealmPDFModel]) -> [SavedPDF] {
+        return realmPDFs.map { realmPDF in
+            return SavedPDF(
+                id: realmPDF.id,
+                name: realmPDF.name,
+                pdfData: realmPDF.pdfData,
+                thumbnailData: realmPDF.thumbnailData,
+                creationDate: realmPDF.creationDate,
+                orderNumber: realmPDF.orderNumber
+            )
+        }
+    }
+
     func deletePDF(withId id: ObjectId) {
         guard let realm = realm else {
             errorMessage = "Realm is not initialized."
@@ -51,15 +64,16 @@ class SavedPDFsViewModel: ObservableObject {
             errorMessage = "Failed to delete PDF: \(error.localizedDescription)"
         }
     }
-
     
-    func sharePDF(_ pdf: RealmPDFModel) {
-        guard let data = pdf.pdfData else { return }
+    func sharePDF(_ pdf: SavedPDF) {
+        guard let realmPDF = realm?.object(ofType: RealmPDFModel.self, forPrimaryKey: pdf.id),
+              let data = realmPDF.pdfData else { return }
         coordinator.sharePdf(data: data)
     }
     
-    func showPDF(_ pdf: RealmPDFModel) {
-        guard let pdfData = pdf.pdfData,
+    func showPDF(_ pdf: SavedPDF) {
+        guard let realmPDF = realm?.object(ofType: RealmPDFModel.self, forPrimaryKey: pdf.id),
+              let pdfData = realmPDF.pdfData,
               let pdfDocument = PDFDocument(data: pdfData) else {
             print("PDF data is invalid or cannot be read.")
             return
@@ -68,7 +82,7 @@ class SavedPDFsViewModel: ObservableObject {
         coordinator.showPdf(pdfDocument: pdfDocument)
     }
     
-    func createMetadata(_ pdf: RealmPDFModel, _ pdfData: Data) -> MetadataRowData? {
+    func createMetadata(_ pdf: SavedPDF, _ pdfData: Data) -> MetadataRowData? {
         guard let _ = PDFDocument(data: pdfData) else { return nil }
         
         let formattedDate = dateFormatter.string(from: pdf.creationDate)
@@ -81,12 +95,13 @@ class SavedPDFsViewModel: ObservableObject {
 
 extension SavedPDFsViewModel {
     
-    func startMergeProcess(with firstPDF: RealmPDFModel) {
-        selectedFirstPDF = firstPDF
+    func startMergeProcess(with firstPDF: SavedPDF) {
+        guard let realmFirstPDF = realm?.object(ofType: RealmPDFModel.self, forPrimaryKey: firstPDF.id) else { return }
+        selectedFirstPDF = realmFirstPDF
         showMergePicker = true
     }
-    
-    func mergePDFs(with secondPDF: RealmPDFModel) {
+
+    func mergePDFs(with secondPDF: SavedPDF) {
         guard let firstPDFData = selectedFirstPDF?.pdfData,
               let secondPDFData = secondPDF.pdfData,
               let firstPDF = PDFDocument(data: firstPDFData),
@@ -136,7 +151,6 @@ extension SavedPDFsViewModel {
         realmPDF.orderNumber = newOrderNumber
         realmPDF.name = "Merged PDF Document \(newOrderNumber)"
 
-        
         do {
             try realm.write {
                 realm.add(realmPDF)
@@ -154,5 +168,3 @@ extension SavedPDFsViewModel {
         return formatter
     }
 }
-
-
