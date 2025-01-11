@@ -8,7 +8,7 @@ struct SavedPDFsView: View {
             List(viewModel.savedPDFs) { pdf in
                 HStack {
                     if let pdfData = pdf.pdfData {
-                        viewModel.addThumbnail(pdfData)
+                        viewModel.createThumbnail(pdfData)
                         
                         if let metadata = viewModel.createMetadata(pdf, pdfData) {
                             MetadataRow(data: metadata)
@@ -35,4 +35,3 @@ struct SavedPDFsView: View {
         }
     }
 }
-
