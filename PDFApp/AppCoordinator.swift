@@ -1,4 +1,5 @@
 import SwiftUI
+import PDFKit
 
 protocol AppCoordinator {
     associatedtype StartView: View
@@ -7,6 +8,7 @@ protocol AppCoordinator {
     func start() -> StartView
     func openEditPDF() -> EditPDFView
     func sharePdf(data: Data)
+    func showPdf(pdfDocument: PDFDocument)
 }
 
 struct UIApplicationCoordinator: AppCoordinator {
@@ -25,7 +27,14 @@ struct UIApplicationCoordinator: AppCoordinator {
             controller.present(activityController, animated: true, completion: nil)
         }
     }
-
+    
+    func showPdf(pdfDocument: PDFDocument) {
+        let pdfViewer = PDFViewer(pdfDocument: pdfDocument)
+        
+        if let controller = currentScreen {
+            controller.present(UIHostingController(rootView: pdfViewer), animated: true)
+        }
+    }
     private var currentScreen: UIViewController? {
         UIApplication.shared.windows.first?.rootViewController
     }
