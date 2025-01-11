@@ -7,6 +7,8 @@ class CreateEditPDFViewModel: ObservableObject {
     @Published var pdfDocument: PDFDocument?
     @Published var saveSuccessMessage: AlertMessage?
     @Published var errorMessage: String?
+    @Published var showingPhotoPicker = false
+    @Published var showingPDFViewer = false
 
     private var realm: Realm?
 
@@ -33,7 +35,7 @@ class CreateEditPDFViewModel: ObservableObject {
         pdfDocument = pdf
     }
 
-    func savePDFToRealm(pdfDocument: PDFDocument, name: String) {
+    func savePDFToRealm(pdfDocument: PDFDocument, name: String) { // Split it into more functions?
         guard let pdfData = pdfDocument.dataRepresentation() else {
             errorMessage = "Unable to generate PDF data."
             return
@@ -81,6 +83,12 @@ class CreateEditPDFViewModel: ObservableObject {
     func removeImage(at index: Int) {
         selectedImages.remove(at: index)
     }
+
+    func onButtonAddPicPressed() {
+        showingPhotoPicker = true
+    }
+
+    func onShowPdfPressed() {
+        showingPDFViewer = true
+    }
 }
-
-

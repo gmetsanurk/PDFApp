@@ -3,13 +3,15 @@ import RealmSwift
 
 @main
 struct PDFApp: SwiftUI.App {
+    let coordinator = UIApplicationCoordinator()
+
     init() {
         setupRealm()
     }
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            coordinator.start()
         }
     }
     

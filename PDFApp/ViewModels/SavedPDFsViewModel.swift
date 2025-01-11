@@ -7,8 +7,10 @@ class SavedPDFsViewModel: ObservableObject {
     @Published var errorMessage: String?
     
     private var realm: Realm?
-    
-    init() {
+    let coordinator: any AppCoordinator
+
+    init(coordinator: any AppCoordinator) {
+        self.coordinator = coordinator
         do {
             self.realm = try Realm()
             loadSavedPDFs()
@@ -50,11 +52,8 @@ class SavedPDFsViewModel: ObservableObject {
     
     func sharePDF(_ pdf: RealmPDFModel) {
         guard let data = pdf.pdfData else { return }
-        let activityController = UIActivityViewController(activityItems: [data], applicationActivities: nil)
-        
-        if let controller = UIApplication.shared.windows.first?.rootViewController {
-            controller.present(activityController, animated: true, completion: nil)
-        }
+
+        coordinator.sharePdf(data: data)
     }
     
     func showPDF(_ pdf: RealmPDFModel) {
@@ -63,17 +62,13 @@ class SavedPDFsViewModel: ObservableObject {
             print("PDF data is invalid or cannot be read.")
             return
         }
-        
+
+        // Show it with coordinator
         let pdfViewer = PDFViewer(pdfDocument: pdfDocument)
         if let controller = UIApplication.shared.windows.first?.rootViewController {
             controller.present(UIHostingController(rootView: pdfViewer), animated: true)
         }
     }
-    
-    func createThumbnail(_ pdfData: Data) -> some View {
-        ThumbnailView(pdfData: pdfData)
-    }
-    
     
     func createMetadata(_ pdf: RealmPDFModel, _ pdfData: Data) -> MetadataRowData? {
         guard let _ = PDFDocument(data: pdfData) else { return nil }
@@ -93,4 +88,5 @@ class SavedPDFsViewModel: ObservableObject {
         return formatter
     }
 }
+
 
