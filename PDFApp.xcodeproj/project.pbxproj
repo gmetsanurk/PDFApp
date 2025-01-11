@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		66CE9B342D313BFF009B7629 /* SavedPDFsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CE9B332D313BEF009B7629 /* SavedPDFsViewModel.swift */; };
+		66CE9B412D315474009B7629 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 66CE9B402D315474009B7629 /* RealmSwift */; };
+		66CE9B422D315474009B7629 /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 66CE9B402D315474009B7629 /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		66CE9B442D3252B9009B7629 /* MetaDataRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CE9B432D3252AF009B7629 /* MetaDataRowView.swift */; };
+		66CE9B462D32532F009B7629 /* MetaDataRowData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CE9B452D325321009B7629 /* MetaDataRowData.swift */; };
 		66D4D5BA2D30DD5C00D640AE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 66D4D5AF2D30DD5C00D640AE /* Assets.xcassets */; };
 		66D4D5BB2D30DD5C00D640AE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 66D4D5B02D30DD5C00D640AE /* Preview Assets.xcassets */; };
 		66D4D5BC2D30DD5C00D640AE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D4D5B22D30DD5C00D640AE /* ContentView.swift */; };
@@ -16,7 +20,6 @@
 		66D4D5BF2D30DD5C00D640AE /* PDFViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D4D5B52D30DD5C00D640AE /* PDFViewer.swift */; };
 		66D4D5C12D30DD5C00D640AE /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D4D5B72D30DD5C00D640AE /* WelcomeView.swift */; };
 		66D4D5C72D30EF2200D640AE /* PhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D4D5C62D30EF2000D640AE /* PhotoPicker.swift */; };
-		66D4D5D12D31024300D640AE /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 66D4D5D02D31024300D640AE /* RealmSwift */; };
 		66D4D5D52D3106B100D640AE /* RealmPDFModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D4D5D42D3106AA00D640AE /* RealmPDFModel.swift */; };
 		66D4D5D72D31152800D640AE /* SavedPDFsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D4D5D62D31151F00D640AE /* SavedPDFsView.swift */; };
 /* End PBXBuildFile section */
@@ -28,6 +31,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				66CE9B422D315474009B7629 /* RealmSwift in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -37,6 +41,8 @@
 /* Begin PBXFileReference section */
 		665475082D300B0C00ABD6B4 /* PDFApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PDFApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		66CE9B332D313BEF009B7629 /* SavedPDFsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedPDFsViewModel.swift; sourceTree = "<group>"; };
+		66CE9B432D3252AF009B7629 /* MetaDataRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetaDataRowView.swift; sourceTree = "<group>"; };
+		66CE9B452D325321009B7629 /* MetaDataRowData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetaDataRowData.swift; sourceTree = "<group>"; };
 		66D4D5AF2D30DD5C00D640AE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		66D4D5B02D30DD5C00D640AE /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		66D4D5B22D30DD5C00D640AE /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -54,7 +60,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				66D4D5D12D31024300D640AE /* RealmSwift in Frameworks */,
+				66CE9B412D315474009B7629 /* RealmSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +71,7 @@
 			isa = PBXGroup;
 			children = (
 				66D4D5B92D30DD5C00D640AE /* PDFApp */,
+				66CE9B3F2D315474009B7629 /* Frameworks */,
 				665475092D300B0C00ABD6B4 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -85,6 +92,13 @@
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
+		66CE9B3F2D315474009B7629 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		66D4D5B12D30DD5C00D640AE /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
@@ -97,6 +111,7 @@
 		66D4D5B82D30DD5C00D640AE /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				66CE9B432D3252AF009B7629 /* MetaDataRowView.swift */,
 				66D4D5B22D30DD5C00D640AE /* ContentView.swift */,
 				66D4D5D62D31151F00D640AE /* SavedPDFsView.swift */,
 				66D4D5B32D30DD5C00D640AE /* CreateEditPDFView.swift */,
@@ -122,6 +137,7 @@
 		66D4D5D82D31220A00D640AE /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				66CE9B452D325321009B7629 /* MetaDataRowData.swift */,
 				66D4D5D42D3106AA00D640AE /* RealmPDFModel.swift */,
 			);
 			path = Models;
@@ -145,7 +161,7 @@
 			);
 			name = PDFApp;
 			packageProductDependencies = (
-				66D4D5D02D31024300D640AE /* RealmSwift */,
+				66CE9B402D315474009B7629 /* RealmSwift */,
 			);
 			productName = PDF;
 			productReference = 665475082D300B0C00ABD6B4 /* PDFApp.app */;
@@ -176,7 +192,7 @@
 			mainGroup = 665474FF2D300B0C00ABD6B4;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				66D4D5CD2D31024300D640AE /* XCRemoteSwiftPackageReference "realm-swift" */,
+				66CE9B3A2D315424009B7629 /* XCRemoteSwiftPackageReference "realm-swift" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 665475092D300B0C00ABD6B4 /* Products */;
@@ -209,10 +225,12 @@
 				66D4D5BC2D30DD5C00D640AE /* ContentView.swift in Sources */,
 				66D4D5BD2D30DD5C00D640AE /* CreateEditPDFView.swift in Sources */,
 				66D4D5C72D30EF2200D640AE /* PhotoPicker.swift in Sources */,
+				66CE9B462D32532F009B7629 /* MetaDataRowData.swift in Sources */,
 				66D4D5BE2D30DD5C00D640AE /* PDFEditorApp.swift in Sources */,
 				66D4D5BF2D30DD5C00D640AE /* PDFViewer.swift in Sources */,
 				66CE9B342D313BFF009B7629 /* SavedPDFsViewModel.swift in Sources */,
 				66D4D5C12D30DD5C00D640AE /* WelcomeView.swift in Sources */,
+				66CE9B442D3252B9009B7629 /* MetaDataRowView.swift in Sources */,
 				66D4D5D72D31152800D640AE /* SavedPDFsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -431,20 +449,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		66D4D5CD2D31024300D640AE /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+		66CE9B3A2D315424009B7629 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/realm/realm-swift";
 			requirement = {
 				kind = exactVersion;
-				version = 20.0.0;
+				version = 10.53.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		66D4D5D02D31024300D640AE /* RealmSwift */ = {
+		66CE9B402D315474009B7629 /* RealmSwift */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 66D4D5CD2D31024300D640AE /* XCRemoteSwiftPackageReference "realm-swift" */;
+			package = 66CE9B3A2D315424009B7629 /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = RealmSwift;
 		};
 /* End XCSwiftPackageProductDependency section */

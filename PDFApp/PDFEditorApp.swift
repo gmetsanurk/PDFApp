@@ -2,7 +2,7 @@ import SwiftUI
 import RealmSwift
 
 @main
-struct PDFEditorApp: App {
+struct PDFApp: SwiftUI.App {
     init() {
         setupRealm()
     }

@@ -63,7 +63,7 @@ class SavedPDFsViewModel: ObservableObject {
         return nil
     }
 
-    func addMetadata(_ pdf: RealmPDFModel, _ pdfData: Data) -> some View {
+    /*func addMetadata(_ pdf: RealmPDFModel, _ pdfData: Data) -> some View {
         if let _ = PDFDocument(data: pdfData) {
             return AnyView(
                 VStack(alignment: .leading) {
@@ -76,6 +76,15 @@ class SavedPDFsViewModel: ObservableObject {
             )
         }
         return AnyView(EmptyView())
+    }*/
+    func createMetadata(_ pdf: RealmPDFModel, _ pdfData: Data) -> MetadataRowData? {
+        guard let _ = PDFDocument(data: pdfData) else { return nil }
+        
+        let formattedDate = dateFormatter.string(from: pdf.creationDate)
+        return MetadataRowData(
+            title: pdf.name,
+            subtitle: "Date: \(formattedDate)"
+        )
     }
 
 
