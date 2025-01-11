@@ -34,48 +34,24 @@ class CreateEditPDFViewModel: ObservableObject {
         }
         pdfDocument = pdf
     }
-
-    func savePDFToRealm(pdfDocument: PDFDocument, name: String) { // Split it into more functions?
-        guard let pdfData = pdfDocument.dataRepresentation() else {
+    
+    func savePDFToRealm(pdfDocument: PDFDocument, name: String) {
+        guard let pdfData = extractPDFData(from: pdfDocument) else {
             errorMessage = "Unable to generate PDF data."
             return
         }
-        
-        let thumbnailData: Data?
-        if let firstPage = pdfDocument.page(at: 0) {
-            let thumbnailSize = CGSize(width: 100, height: 100)
-            let thumbnailImage = firstPage.thumbnail(of: thumbnailSize, for: .mediaBox)
-            thumbnailData = thumbnailImage.pngData()
-        } else {
-            thumbnailData = nil
-        }
-        
-        let realmPDF = RealmPDFModel()
-        realmPDF.pdfData = pdfData
-        realmPDF.thumbnailData = thumbnailData ?? Data()
-        realmPDF.creationDate = Date()
-        
+
+        let thumbnailData = generateThumbnailData(from: pdfDocument)
+        let realmPDF = createRealmPDF(pdfData: pdfData, thumbnailData: thumbnailData, name: name)
+
         guard let realm = realm else {
             errorMessage = "Realm is not initialized."
             return
         }
-        
-        let lastOrderNumber = realm.objects(RealmPDFModel.self).max(ofProperty: "orderNumber") as Int? ?? 0
-        let newOrderNumber = lastOrderNumber + 1
-        realmPDF.orderNumber = newOrderNumber
-        
-        realmPDF.name = "\(name) \(newOrderNumber)"
-        
-        do {
-            try realm.write {
-                realm.add(realmPDF)
-            }
-            saveSuccessMessage = AlertMessage(message: "PDF saved to Realm successfully!")
-        } catch {
-            errorMessage = "Error saving PDF to Realm: \(error.localizedDescription)"
-        }
-    }
 
+        saveToRealm(realmPDF: realmPDF, in: realm)
+    }
+    
     func addImage(_ image: UIImage) {
         selectedImages.append(image)
     }
@@ -91,4 +67,51 @@ class CreateEditPDFViewModel: ObservableObject {
     func onShowPdfPressed() {
         showingPDFViewer = true
     }
+}
+
+extension CreateEditPDFViewModel {
+    
+    private func extractPDFData(from pdfDocument: PDFDocument) -> Data? {
+        return pdfDocument.dataRepresentation()
+    }
+    
+    private func generateThumbnailData(from pdfDocument: PDFDocument) -> Data? {
+        guard let firstPage = pdfDocument.page(at: 0) else {
+            return nil
+        }
+        let thumbnailSize = CGSize(width: 100, height: 100)
+        let thumbnailImage = firstPage.thumbnail(of: thumbnailSize, for: .mediaBox)
+        return thumbnailImage.pngData()
+    }
+    
+    private func createRealmPDF(pdfData: Data, thumbnailData: Data?, name: String) -> RealmPDFModel {
+        let realmPDF = RealmPDFModel()
+        realmPDF.pdfData = pdfData
+        realmPDF.thumbnailData = thumbnailData ?? Data()
+        realmPDF.creationDate = Date()
+
+        guard let realm = realm else {
+            errorMessage = "Realm is not initialized."
+            return realmPDF
+        }
+
+        let lastOrderNumber = realm.objects(RealmPDFModel.self).max(ofProperty: "orderNumber") as Int? ?? 0
+        let newOrderNumber = lastOrderNumber + 1
+        realmPDF.orderNumber = newOrderNumber
+        realmPDF.name = "\(name) \(newOrderNumber)"
+
+        return realmPDF
+    }
+    
+    private func saveToRealm(realmPDF: RealmPDFModel, in realm: Realm) {
+        do {
+            try realm.write {
+                realm.add(realmPDF)
+            }
+            saveSuccessMessage = AlertMessage(message: "PDF saved to Realm successfully!")
+        } catch {
+            errorMessage = "Error saving PDF to Realm: \(error.localizedDescription)"
+        }
+    }
+
 }
