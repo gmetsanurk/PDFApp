@@ -52,31 +52,11 @@ class SavedPDFsViewModel: ObservableObject {
         }
     }
 
-    func addThumbnail(_ pdfData: Data) -> Image? {
-        if let image = UIImage(data: pdfData) {
-            return Image(uiImage: image)
-                .resizable()
-                .scaledToFit()
-                .frame(width: 50, height: 50)
-                .clipShape(Circle()) as? Image
-        }
-        return nil
+    func createThumbnail(_ pdfData: Data) -> some View {
+        ThumbnailView(pdfData: pdfData)
     }
+    
 
-    /*func addMetadata(_ pdf: RealmPDFModel, _ pdfData: Data) -> some View {
-        if let _ = PDFDocument(data: pdfData) {
-            return AnyView(
-                VStack(alignment: .leading) {
-                    Text(pdf.name)
-                        .font(.headline)
-                    Text("Date: \(pdf.creationDate, formatter: dateFormatter)")
-                        .font(.subheadline)
-                        .foregroundColor(.gray)
-                }
-            )
-        }
-        return AnyView(EmptyView())
-    }*/
     func createMetadata(_ pdf: RealmPDFModel, _ pdfData: Data) -> MetadataRowData? {
         guard let _ = PDFDocument(data: pdfData) else { return nil }
         
