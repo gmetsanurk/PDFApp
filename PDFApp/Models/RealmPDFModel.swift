@@ -7,4 +7,5 @@ class RealmPDFModel: Object, Identifiable {
     @Persisted var thumbnailData: Data
     @Persisted var pdfData: Data?
     @Persisted var creationDate: Date
+    @Persisted var orderNumber: Int = 0
 }
