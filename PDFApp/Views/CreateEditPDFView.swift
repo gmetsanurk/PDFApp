@@ -15,7 +15,7 @@ struct CreateEditPDFView: View {
         VStack {
             if viewModel.selectedImages.isEmpty {
                 Text("Choose pic for editing PDF")
-                    .foregroundColor(.gray)
+                    .foregroundColor(AppColors.textSecondary)
                     .padding()
             } else {
                 ScrollView {
@@ -36,7 +36,7 @@ struct CreateEditPDFView: View {
                     Text("Add pic")
                         .font(.headline)
                         .padding()
-                        .background(Color.blue)
+                        .background(AppColors.buttonPrimary)
                         .foregroundColor(.white)
                         .cornerRadius(10)
                 }
@@ -46,8 +46,8 @@ struct CreateEditPDFView: View {
                     Text("Create PDF")
                         .font(.headline)
                         .padding()
-                        .background(Color.green)
-                        .foregroundColor(.white)
+                        .background(AppColors.buttonPrimary)
+                        .foregroundColor(AppColors.textPrimary)
                         .cornerRadius(10)
                 }
                 .padding()
@@ -61,8 +61,8 @@ struct CreateEditPDFView: View {
                     Text("Save PDF")
                         .font(.headline)
                         .padding()
-                        .background(Color.orange)
-                        .foregroundColor(.white)
+                        .background(AppColors.buttonSecondary)
+                        .foregroundColor(AppColors.textPrimary)
                         .cornerRadius(10)
                 }
                 .padding()
@@ -71,8 +71,8 @@ struct CreateEditPDFView: View {
                     Text("Show PDF")
                         .font(.headline)
                         .padding()
-                        .background(Color.gray)
-                        .foregroundColor(.white)
+                        .background(AppColors.buttonSecondary)
+                        .foregroundColor(AppColors.textPrimary)
                         .cornerRadius(10)
                 }
                 .padding()
@@ -83,8 +83,8 @@ struct CreateEditPDFView: View {
             Text("Show saved PDFs")
                 .font(.headline)
                 .padding()
-                .background(Color.purple)
-                .foregroundColor(.white)
+                .background(AppColors.showSavedPDFs)
+                .foregroundColor(AppColors.textPrimary)
                 .cornerRadius(10)
         }
         .padding()
