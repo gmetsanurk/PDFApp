@@ -1,4 +1,4 @@
-import SwiftUI
+import Foundation
 import RealmSwift
 
 class RealmPDFModel: Object, Identifiable {
