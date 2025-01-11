@@ -9,3 +9,12 @@ class RealmPDFModel: Object, Identifiable {
     @Persisted var creationDate: Date
     @Persisted var orderNumber: Int = 0
 }
+
+struct SavedPDF: Identifiable {
+    var id: ObjectId
+    var name: String
+    var pdfData: Data?
+    var thumbnailData: Data?
+    var creationDate: Date
+    var orderNumber: Int
+}
