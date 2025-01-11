@@ -16,6 +16,8 @@
 		66CE9B4E2D32779D009B7629 /* CreateEditPDFViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CE9B4D2D32778F009B7629 /* CreateEditPDFViewModel.swift */; };
 		66CE9B522D3292C5009B7629 /* AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CE9B512D3292BD009B7629 /* AppColors.swift */; };
 		66CE9B542D32C215009B7629 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CE9B532D32C20C009B7629 /* AppCoordinator.swift */; };
+		66CE9B562D32CC21009B7629 /* AlertMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CE9B552D32CC1B009B7629 /* AlertMessage.swift */; };
+		66CE9B582D32CD7C009B7629 /* AppGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CE9B572D32CD75009B7629 /* AppGeometry.swift */; };
 		66D4D5BA2D30DD5C00D640AE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 66D4D5AF2D30DD5C00D640AE /* Assets.xcassets */; };
 		66D4D5BB2D30DD5C00D640AE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 66D4D5B02D30DD5C00D640AE /* Preview Assets.xcassets */; };
 		66D4D5BD2D30DD5C00D640AE /* CreateEditPDFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D4D5B32D30DD5C00D640AE /* CreateEditPDFView.swift */; };
@@ -50,6 +52,8 @@
 		66CE9B4D2D32778F009B7629 /* CreateEditPDFViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEditPDFViewModel.swift; sourceTree = "<group>"; };
 		66CE9B512D3292BD009B7629 /* AppColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColors.swift; sourceTree = "<group>"; };
 		66CE9B532D32C20C009B7629 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		66CE9B552D32CC1B009B7629 /* AlertMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertMessage.swift; sourceTree = "<group>"; };
+		66CE9B572D32CD75009B7629 /* AppGeometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppGeometry.swift; sourceTree = "<group>"; };
 		66D4D5AF2D30DD5C00D640AE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		66D4D5B02D30DD5C00D640AE /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		66D4D5B32D30DD5C00D640AE /* CreateEditPDFView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEditPDFView.swift; sourceTree = "<group>"; };
@@ -134,6 +138,7 @@
 				66D4D5B42D30DD5C00D640AE /* PDFEditorApp.swift */,
 				66D4D5C62D30EF2000D640AE /* PhotoPicker.swift */,
 				66CE9B512D3292BD009B7629 /* AppColors.swift */,
+				66CE9B572D32CD75009B7629 /* AppGeometry.swift */,
 				66CE9B532D32C20C009B7629 /* AppCoordinator.swift */,
 				66D4D5B12D30DD5C00D640AE /* Preview Content */,
 				66D4D5B82D30DD5C00D640AE /* Views */,
@@ -146,6 +151,7 @@
 		66D4D5D82D31220A00D640AE /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				66CE9B552D32CC1B009B7629 /* AlertMessage.swift */,
 				66CE9B452D325321009B7629 /* MetaDataRowData.swift */,
 				66D4D5D42D3106AA00D640AE /* RealmPDFModel.swift */,
 			);
@@ -231,6 +237,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				66D4D5D52D3106B100D640AE /* RealmPDFModel.swift in Sources */,
+				66CE9B562D32CC21009B7629 /* AlertMessage.swift in Sources */,
 				66D4D5BD2D30DD5C00D640AE /* CreateEditPDFView.swift in Sources */,
 				66D4D5C72D30EF2200D640AE /* PhotoPicker.swift in Sources */,
 				66CE9B462D32532F009B7629 /* MetaDataRowData.swift in Sources */,
@@ -238,6 +245,7 @@
 				66D4D5BF2D30DD5C00D640AE /* PDFViewer.swift in Sources */,
 				66CE9B342D313BFF009B7629 /* SavedPDFsViewModel.swift in Sources */,
 				66D4D5C12D30DD5C00D640AE /* WelcomeView.swift in Sources */,
+				66CE9B582D32CD7C009B7629 /* AppGeometry.swift in Sources */,
 				66CE9B4C2D327220009B7629 /* ThumbnailView.swift in Sources */,
 				66CE9B4E2D32779D009B7629 /* CreateEditPDFViewModel.swift in Sources */,
 				66CE9B522D3292C5009B7629 /* AppColors.swift in Sources */,

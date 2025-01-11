@@ -1,11 +1,6 @@
 import SwiftUI
 import PDFKit
 
-struct AlertMessage: Identifiable { // If have time and joy, move this file to Models
-    let id = UUID()
-    let message: String
-}
-
 struct CreateEditPDFView: View {
     @StateObject private var viewModel = CreateEditPDFViewModel()
     private var coordinator: any AppCoordinator
@@ -41,7 +36,7 @@ struct CreateEditPDFView: View {
                         .padding()
                         .background(AppColors.buttonPrimary)
                         .foregroundColor(.white)
-                        .cornerRadius(10)
+                        .cornerRadius(AppGeometry.cornerRadius)
                 }
                 .padding()
                 
@@ -51,7 +46,7 @@ struct CreateEditPDFView: View {
                         .padding()
                         .background(AppColors.buttonPrimary)
                         .foregroundColor(AppColors.textPrimary)
-                        .cornerRadius(10)
+                        .cornerRadius(AppGeometry.cornerRadius)
                 }
                 .padding()
                 .disabled(viewModel.selectedImages.isEmpty)

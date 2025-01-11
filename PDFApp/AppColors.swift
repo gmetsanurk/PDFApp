@@ -8,7 +8,3 @@ struct AppColors {
     static let textPrimary = Color.white
     static let textSecondary = Color.gray
 }
-
-struct AppGeometry {
-    static let cornerRadius = 10.0
-}
