@@ -38,7 +38,7 @@ class CreateEditPDFViewModel: ObservableObject {
             errorMessage = "Unable to generate PDF data."
             return
         }
-
+        
         let thumbnailData: Data?
         if let firstPage = pdfDocument.page(at: 0) {
             let thumbnailSize = CGSize(width: 100, height: 100)
@@ -47,18 +47,23 @@ class CreateEditPDFViewModel: ObservableObject {
         } else {
             thumbnailData = nil
         }
-
+        
         let realmPDF = RealmPDFModel()
-        realmPDF.name = name
         realmPDF.pdfData = pdfData
         realmPDF.thumbnailData = thumbnailData ?? Data()
         realmPDF.creationDate = Date()
-
+        
         guard let realm = realm else {
             errorMessage = "Realm is not initialized."
             return
         }
-
+        
+        let lastOrderNumber = realm.objects(RealmPDFModel.self).max(ofProperty: "orderNumber") as Int? ?? 0
+        let newOrderNumber = lastOrderNumber + 1
+        realmPDF.orderNumber = newOrderNumber
+        
+        realmPDF.name = "\(name) \(newOrderNumber)"
+        
         do {
             try realm.write {
                 realm.add(realmPDF)
