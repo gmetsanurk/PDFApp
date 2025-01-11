@@ -1,14 +1,18 @@
 import SwiftUI
 
 struct SavedPDFsView: View {
-    @StateObject private var viewModel = SavedPDFsViewModel()
-    
+    @ObservedObject private var viewModel: SavedPDFsViewModel
+
+    init(coordinator: any AppCoordinator) {
+        self.viewModel = SavedPDFsViewModel(coordinator: coordinator)
+    }
+
     var body: some View {
         NavigationView {
             List(viewModel.savedPDFs) { pdf in
                 HStack {
                     if let pdfData = pdf.pdfData {
-                        viewModel.createThumbnail(pdfData)
+                        ThumbnailView(pdfData: pdfData)
                         
                         if let metadata = viewModel.createMetadata(pdf, pdfData) {
                             MetadataRow(data: metadata)
@@ -35,3 +39,4 @@ struct SavedPDFsView: View {
         }
     }
 }
+

@@ -1,16 +1,19 @@
 import SwiftUI
 import PDFKit
 
-struct AlertMessage: Identifiable {
+struct AlertMessage: Identifiable { // If have time and joy, move this file to Models
     let id = UUID()
     let message: String
 }
 
 struct CreateEditPDFView: View {
     @StateObject private var viewModel = CreateEditPDFViewModel()
-    @State private var showingPhotoPicker = false
-    @State private var showingPDFViewer = false
-    
+    private var coordinator: any AppCoordinator
+
+    init(coordinator: any AppCoordinator) {
+        self.coordinator = coordinator
+    }
+
     var body: some View {
         VStack {
             if viewModel.selectedImages.isEmpty {
@@ -32,7 +35,7 @@ struct CreateEditPDFView: View {
             }
             
             HStack {
-                Button(action: { showingPhotoPicker = true }) {
+                Button(action: { viewModel.onButtonAddPicPressed() }) {
                     Text("Add pic")
                         .font(.headline)
                         .padding()
@@ -63,36 +66,36 @@ struct CreateEditPDFView: View {
                         .padding()
                         .background(AppColors.buttonSecondary)
                         .foregroundColor(AppColors.textPrimary)
-                        .cornerRadius(10)
+                        .cornerRadius(AppGeometry.cornerRadius)
                 }
                 .padding()
                 
-                Button(action: { showingPDFViewer = true }) {
+                Button(action: { viewModel.onShowPdfPressed() }) {
                     Text("Show PDF")
                         .font(.headline)
                         .padding()
                         .background(AppColors.buttonSecondary)
                         .foregroundColor(AppColors.textPrimary)
-                        .cornerRadius(10)
+                        .cornerRadius(AppGeometry.cornerRadius)
                 }
                 .padding()
             }
         }
         
-        NavigationLink(destination: SavedPDFsView()) {
+        NavigationLink(destination: SavedPDFsView(coordinator: coordinator)) {
             Text("Show saved PDFs")
                 .font(.headline)
                 .padding()
                 .background(AppColors.showSavedPDFs)
                 .foregroundColor(AppColors.textPrimary)
-                .cornerRadius(10)
+                .cornerRadius(AppGeometry.cornerRadius)
         }
         .padding()
         
-        .sheet(isPresented: $showingPhotoPicker) {
+        .sheet(isPresented: $viewModel.showingPhotoPicker) {
             PhotoPicker(selectedImages: $viewModel.selectedImages)
         }
-        .sheet(isPresented: $showingPDFViewer) {
+        .sheet(isPresented: $viewModel.showingPDFViewer) {
             if let pdfDocument = viewModel.pdfDocument {
                 PDFViewer(pdfDocument: pdfDocument)
             }
@@ -107,3 +110,4 @@ struct CreateEditPDFView: View {
         .navigationTitle("Create PDF")
     }
 }
+

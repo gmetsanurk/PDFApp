@@ -1,6 +1,12 @@
 import SwiftUI
 
 struct WelcomeView: View {
+    private var coordinator: any AppCoordinator
+
+    init(coordinator: any AppCoordinator) {
+        self.coordinator = coordinator
+    }
+
     var body: some View {
         NavigationView {
             VStack(spacing: 20) {
@@ -31,7 +37,7 @@ struct WelcomeView: View {
                 .font(.body)
                 .padding()
 
-                NavigationLink(destination: CreateEditPDFView()) {
+                NavigationLink(destination: CreateEditPDFView(coordinator: coordinator)) {
                     Text("Let's begin!")
                         .font(.headline)
                         .foregroundColor(.white)
@@ -46,4 +52,5 @@ struct WelcomeView: View {
         }
     }
 }
+
 
