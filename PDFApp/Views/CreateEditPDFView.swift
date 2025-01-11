@@ -18,12 +18,22 @@ struct CreateEditPDFView: View {
             } else {
                 ScrollView {
                     VStack {
-                        ForEach(viewModel.selectedImages, id: \.self) { image in
-                            Image(uiImage: image)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(height: 200)
-                                .padding()
+                        ForEach(viewModel.selectedImages.indices, id: \.self) { index in
+                            HStack {
+                                Image(uiImage: viewModel.selectedImages[index])
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(height: 200)
+                                    .padding()
+
+                                Button(action: {
+                                    viewModel.removeImage(at: index)
+                                }) {
+                                    Image(systemName: "trash")
+                                        .foregroundColor(.red)
+                                        .padding()
+                                }
+                            }
                         }
                     }
                 }
