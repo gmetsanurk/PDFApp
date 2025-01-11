@@ -10,7 +10,6 @@ struct ThumbnailView: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 50, height: 50)
-                    .clipShape(Circle())
             )
         } else {
             return AnyView(
@@ -18,7 +17,6 @@ struct ThumbnailView: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 50, height: 50)
-                    .clipShape(Circle())
                     .foregroundColor(.gray)
             )
         }
