@@ -21,7 +21,7 @@ struct SavedPDFsView: View {
                 }
                 .contextMenu {
                     Button(action: {
-                        viewModel.deletePDF(pdf)
+                        viewModel.deletePDF(withId: pdf.id)
                     }) {
                         Label("Delete", systemImage: "trash")
                     }
@@ -30,13 +30,27 @@ struct SavedPDFsView: View {
                     }) {
                         Label("Share", systemImage: "square.and.arrow.up")
                     }
+                    Button(action: {
+                        viewModel.startMergeProcess(with: pdf)
+                    }) {
+                        Label("Merge", systemImage: "doc.on.doc")
+                    }
                 }
                 .onTapGesture {
                     viewModel.showPDF(pdf)
                 }
             }
             .navigationTitle("Saved PDFs")
+            .sheet(isPresented: $viewModel.showMergePicker) {
+                MergePicker(
+                    savedPDFs: viewModel.savedPDFs,
+                    onDocumentSelected: { secondPDF in
+                        viewModel.mergePDFs(with: secondPDF)
+                    }
+                )
+            }
         }
     }
 }
+
 

@@ -18,6 +18,7 @@
 		66CE9B542D32C215009B7629 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CE9B532D32C20C009B7629 /* AppCoordinator.swift */; };
 		66CE9B562D32CC21009B7629 /* AlertMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CE9B552D32CC1B009B7629 /* AlertMessage.swift */; };
 		66CE9B582D32CD7C009B7629 /* AppGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CE9B572D32CD75009B7629 /* AppGeometry.swift */; };
+		66CE9B5A2D32D849009B7629 /* MergePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66CE9B592D32D844009B7629 /* MergePicker.swift */; };
 		66D4D5BA2D30DD5C00D640AE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 66D4D5AF2D30DD5C00D640AE /* Assets.xcassets */; };
 		66D4D5BB2D30DD5C00D640AE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 66D4D5B02D30DD5C00D640AE /* Preview Assets.xcassets */; };
 		66D4D5BD2D30DD5C00D640AE /* CreateEditPDFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D4D5B32D30DD5C00D640AE /* CreateEditPDFView.swift */; };
@@ -54,6 +55,7 @@
 		66CE9B532D32C20C009B7629 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		66CE9B552D32CC1B009B7629 /* AlertMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertMessage.swift; sourceTree = "<group>"; };
 		66CE9B572D32CD75009B7629 /* AppGeometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppGeometry.swift; sourceTree = "<group>"; };
+		66CE9B592D32D844009B7629 /* MergePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergePicker.swift; sourceTree = "<group>"; };
 		66D4D5AF2D30DD5C00D640AE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		66D4D5B02D30DD5C00D640AE /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		66D4D5B32D30DD5C00D640AE /* CreateEditPDFView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEditPDFView.swift; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 				66D4D5B32D30DD5C00D640AE /* CreateEditPDFView.swift */,
 				66D4D5B52D30DD5C00D640AE /* PDFViewer.swift */,
 				66D4D5B72D30DD5C00D640AE /* WelcomeView.swift */,
+				66CE9B592D32D844009B7629 /* MergePicker.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -242,6 +245,7 @@
 				66D4D5C72D30EF2200D640AE /* PhotoPicker.swift in Sources */,
 				66CE9B462D32532F009B7629 /* MetaDataRowData.swift in Sources */,
 				66D4D5BE2D30DD5C00D640AE /* PDFEditorApp.swift in Sources */,
+				66CE9B5A2D32D849009B7629 /* MergePicker.swift in Sources */,
 				66D4D5BF2D30DD5C00D640AE /* PDFViewer.swift in Sources */,
 				66CE9B342D313BFF009B7629 /* SavedPDFsViewModel.swift in Sources */,
 				66D4D5C12D30DD5C00D640AE /* WelcomeView.swift in Sources */,
