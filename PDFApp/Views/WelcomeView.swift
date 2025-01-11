@@ -37,7 +37,7 @@ struct WelcomeView: View {
                         .foregroundColor(.white)
                         .padding()
                         .frame(maxWidth: .infinity)
-                        .background(Color.blue)
+                        .background(AppColors.buttonPrimary)
                         .cornerRadius(10)
                 }
                 .padding(.horizontal, 40)

@@ -9,7 +9,7 @@ struct MetadataRow: View {
                 .font(.headline)
             Text(data.subtitle)
                 .font(.subheadline)
-                .foregroundColor(.gray)
+                .foregroundColor(AppColors.textSecondary)
         }
     }
 }
