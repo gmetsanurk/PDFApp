@@ -27,11 +27,15 @@ struct WelcomeView: View {
                     }
                     HStack {
                         Image(systemName: "trash")
-                        Text("Delete PDFs.")
+                        Text("Delete PDFs")
                     }
                     HStack {
                         Image(systemName: "square.and.arrow.up")
                         Text("Share documents")
+                    }
+                    HStack {
+                        Image(systemName: "doc.on.doc")
+                        Text("Merge PDF documents")
                     }
                 }
                 .font(.body)
@@ -52,5 +56,3 @@ struct WelcomeView: View {
         }
     }
 }
-
-
