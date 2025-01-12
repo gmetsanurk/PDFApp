@@ -132,25 +132,20 @@ extension SavedPDFsViewModel {
         guard let pdfData = pdfDocument.dataRepresentation(),
               let realm = realm else { return }
         
-        let thumbnailData: Data?
-        if let firstPage = pdfDocument.page(at: 0) {
-            let thumbnailSize = CGSize(width: 100, height: 100)
-            let thumbnailImage = firstPage.thumbnail(of: thumbnailSize, for: .mediaBox)
-            thumbnailData = thumbnailImage.pngData()
-        } else {
-            thumbnailData = nil
-        }
+        let thumbnailData = generateThumbnailData(from: pdfDocument)
+        let realmPDF = createRealmPDFModel(with: pdfData, thumbnailData: thumbnailData, in: realm)
         
-        let realmPDF = RealmPDFModel()
-        realmPDF.pdfData = pdfData
-        realmPDF.thumbnailData = thumbnailData ?? Data()
-        realmPDF.creationDate = Date()
-        
-        let lastOrderNumber = realm.objects(RealmPDFModel.self).max(ofProperty: "orderNumber") as Int? ?? 0
-        let newOrderNumber = lastOrderNumber + 1
-        realmPDF.orderNumber = newOrderNumber
-        realmPDF.name = "Merged PDF Document \(newOrderNumber)"
-
+        saveToRealm(realmPDF, in: realm)
+    }
+    
+    private func generateThumbnailData(from pdfDocument: PDFDocument) -> Data? {
+        guard let firstPage = pdfDocument.page(at: 0) else { return nil }
+        let thumbnailSize = CGSize(width: 100, height: 100)
+        let thumbnailImage = firstPage.thumbnail(of: thumbnailSize, for: .mediaBox)
+        return thumbnailImage.pngData()
+    }
+    
+    private func saveToRealm(_ realmPDF: RealmPDFModel, in realm: Realm) {
         do {
             try realm.write {
                 realm.add(realmPDF)
@@ -160,6 +155,20 @@ extension SavedPDFsViewModel {
             errorMessage = "Failed to save merged PDF: \(error.localizedDescription)"
         }
     }
+    
+    private func createRealmPDFModel(with pdfData: Data, thumbnailData: Data?, in realm: Realm) -> RealmPDFModel {
+        let realmPDF = RealmPDFModel()
+        realmPDF.pdfData = pdfData
+        realmPDF.thumbnailData = thumbnailData ?? Data()
+        realmPDF.creationDate = Date()
+        
+        let lastOrderNumber = realm.objects(RealmPDFModel.self).max(ofProperty: "orderNumber") as Int? ?? 0
+        realmPDF.orderNumber = lastOrderNumber + 1
+        realmPDF.name = "Merged PDF Document \(realmPDF.orderNumber)"
+        
+        return realmPDF
+    }
+
     
     private var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
